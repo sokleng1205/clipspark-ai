@@ -1,0 +1,47 @@
+import { FFmpeg } from "@ffmpeg/ffmpeg";
+import { fetchFile, toBlobURL } from "@ffmpeg/util";
+
+let ffmpeg: FFmpeg | null = null;
+
+export const loadFFmpeg = async () => {
+  if (ffmpeg) return ffmpeg;
+  ffmpeg = new FFmpeg();
+  const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
+  await ffmpeg.load({
+    coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, "text/javascript"),
+    wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, "application/wasm"),
+  });
+  return ffmpeg;
+};
+
+export const extractThumbnail = async (videoFile: File): Promise<string> => {
+  const ffmpeg = await loadFFmpeg();
+  await ffmpeg.writeFile("input.mp4", await fetchFile(videoFile));
+  await ffmpeg.exec(["-i", "input.mp4", "-ss", "00:00:01", "-vframes", "1", "thumb.png"]);
+  const data = await ffmpeg.readFile("thumb.png");
+  return URL.createObjectURL(new Blob([data], { type: "image/png" }));
+};
+
+export const cropVertical916 = async (inputFile: File, startTime: number, endTime: number): Promise<Blob> => {
+  const ffmpeg = await loadFFmpeg();
+  await ffmpeg.writeFile("input.mp4", await fetchFile(inputFile));
+  await ffmpeg.exec([
+    "-i", "input.mp4",
+    "-ss", String(startTime),
+    "-to", String(endTime),
+    "-vf", "crop=ih*9/16:ih",
+    "-c:a", "copy",
+    "output.mp4",
+  ]);
+  const data = await ffmpeg.readFile("output.mp4");
+  return new Blob([data], { type: "video/mp4" });
+};
+
+export const renderCaptionsToVideo = async (videoBlob: Blob, captions: any[]): Promise<Blob> => {
+  const ffmpeg = await loadFFmpeg();
+  await ffmpeg.writeFile("input.mp4", await fetchFile(videoBlob));
+  // In production build proper ASS caption overlay
+  await ffmpeg.exec(["-i", "input.mp4", "-vf", "subtitles=captions.ass", "output.mp4"]);
+  const data = await ffmpeg.readFile("output.mp4");
+  return new Blob([data], { type: "video/mp4" });
+};
