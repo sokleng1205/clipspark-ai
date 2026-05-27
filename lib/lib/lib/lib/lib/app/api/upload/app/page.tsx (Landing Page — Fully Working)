@@ -1,0 +1,29 @@
+"use client";
+import { motion } from "framer-motion";
+import Hero from "@/components/landing/Hero";
+import Features from "@/components/landing/Features";
+import Pricing from "@/components/landing/Pricing";
+import FAQ from "@/components/landing/FAQ";
+
+export default function Home() {
+  return (
+    <div className="relative overflow-hidden">
+      {/* Background Glowing Blobs */}
+      <motion.div
+        className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl -z-10"
+        animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
+        transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-20 right-10 w-80 h-80 bg-secondary/20 rounded-full blur-3xl -z-10"
+        animate={{ x: [0, -30, 0], y: [0, 20, 0] }}
+        transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
+      />
+
+      <Hero />
+      <Features />
+      <Pricing />
+      <FAQ />
+    </div>
+  );
+}
