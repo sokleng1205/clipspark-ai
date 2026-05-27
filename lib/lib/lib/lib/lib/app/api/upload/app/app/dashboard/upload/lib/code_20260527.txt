@@ -1,0 +1,2 @@
+// If the file is named Navbar.tsx, use this:
+import Navbar from '@/components/shared/Navbar';
