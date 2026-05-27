@@ -1,0 +1,63 @@
+clipspark-ai/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/page.tsx
+│   │   ├── register/page.tsx
+│   │   └── layout.tsx
+│   ├── dashboard/
+│   │   ├── page.tsx
+│   │   ├── upload/page.tsx
+│   │   ├── processing/page.tsx
+│   │   ├── editor/page.tsx
+│   │   ├── export/page.tsx
+│   │   └── layout.tsx
+│   ├── pricing/page.tsx
+│   ├── api/
+│   │   ├── upload/route.ts
+│   │   ├── analyze-video/route.ts
+│   │   ├── generate-highlights/route.ts
+│   │   ├── generate-captions/route.ts
+│   │   ├── generate-viral-text/route.ts
+│   │   ├── render-video/route.ts
+│   │   ├── stripe/route.ts
+│   │   └── stripe/webhook/route.ts
+│   ├── page.tsx
+│   ├── layout.tsx
+│   └── globals.css
+├── components/
+│   ├── ui/
+│   │   ├── Button.tsx
+│   │   ├── GlassCard.tsx
+│   │   └── Loader.tsx
+│   ├── landing/
+│   │   ├── Hero.tsx
+│   │   ├── Features.tsx
+│   │   ├── Pricing.tsx
+│   │   └── FAQ.tsx
+│   ├── dashboard/
+│   │   ├── UploadZone.tsx
+│   │   ├── VideoPreview.tsx
+│   │   └── ProcessingStatus.tsx
+│   ├── video/
+│   │   ├── TimelineEditor.tsx
+│   │   └── ExportPanel.tsx
+│   └── shared/
+│       ├── Navbar.tsx
+│       └── Footer.tsx
+├── lib/
+│   ├── supabase.ts
+│   ├── openai.ts
+│   ├── ffmpeg.ts
+│   ├── highlightDetection.ts
+│   ├── stripe.ts
+│   └── utils.ts
+├── hooks/
+│   ├── useUpload.ts
+│   ├── useAIProcessing.ts
+│   └── useSubscription.ts
+├── public/
+├── tailwind.config.js
+├── next.config.js
+├── middleware.ts
+├── package.json
+└── .env.local
